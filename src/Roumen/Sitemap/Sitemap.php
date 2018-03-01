@@ -409,6 +409,7 @@ class Sitemap
 	 */
 	public function store($format = 'xml', $filename = 'sitemap', $path = null, $style = null)
 	{
+        $gzip = $this->configRepository->get('sitemap.gzip', false) === true;
 		// turn off caching for this method
 		$this->model->setUseCache(false);
 
@@ -505,8 +506,12 @@ class Sitemap
 			$file = $path . DIRECTORY_SEPARATOR . $filename . '.' . $fe;
 		}
 
+        if ($gzip) {
+            $file = $file . '.gz';
+        }
+
 		// must return something
-		if ($this->file->put($file, $data['content']))
+		if ($this->file->put($file, $gzip ? gzencode($data['content']) : $data['content']))
 		{
 			return "Success! Your sitemap file is created.";
 		}

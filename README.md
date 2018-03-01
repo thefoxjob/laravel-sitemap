@@ -6,6 +6,7 @@ A not so simple sitemap generator for Laravel 5.
 
 
 ## Notes
+With GZIP Support
 
 Branch dev-master is for development and is UNSTABLE!
 
